@@ -1,9 +1,7 @@
 
 exports.seed = function(knex, Promise) {
-  // Deletes ALL existing entries
   return knex('game').del()
     .then(function () {
-      // Inserts seed entries
       return knex('game').insert([
         {
           id: 1,
@@ -22,5 +20,7 @@ exports.seed = function(knex, Promise) {
           rating: 8.1
         },
       ]);
-    });
-};
+    }).then(() => {
+        return knex.raw("ALTER SEQUENCE resolutions_id_seq RESTART WITH 4;")
+  })
+}
